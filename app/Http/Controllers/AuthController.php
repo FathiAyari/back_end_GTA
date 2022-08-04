@@ -27,7 +27,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
         //create new user in users table
-        $role = 2 ; 
+        $role = 2 ;
         $user = User::create([
             'firstname' => $req->firstname,
             'lastname' => $req->lastname,
@@ -35,6 +35,7 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'role_id' => $role ,
+            "status" => "test" ,
         ]);
         $token = $user->createToken('Personal Access Token')->plainTextToken;
         $response = ['user' => $user, 'token' => $token];
@@ -61,7 +62,7 @@ class AuthController extends Controller
         return response()->json($response, 400);
     }
 
-    
+
     public function user()
     {
         return response([

@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-//plannings tous bien fonctionne 
+//plannings tous bien fonctionne
 Route::get('/getplannings', [PlanningController::class, 'getplannings']);
 Route::post('/postplannings', [PlanningController::class, 'store']);
 Route::delete('/deleteplanning/{id}', [PlanningController::class, 'destroy']);
@@ -42,7 +42,8 @@ Route::post('/postactivites', [ActiviteController::class, 'postactivites']);
 Route::put('/updateactivites/{id}', [ActiviteController::class, 'updateactivites']);
 Route::delete('/deleteactivite/{id}', [ActiviteController::class, 'deleteactivite']);
 
-//users tous bien fonctionne 
+
+//users tous bien fonctionne
 Route::get('/getusers', [Controller::class, 'getusers']);
 Route::delete('/deleteuser/{id}', [Controller::class, 'deleteusers']);
 Route::post('/createuser', [Controller::class, 'createuser']);
