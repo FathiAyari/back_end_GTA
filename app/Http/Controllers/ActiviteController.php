@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 class ActiviteController extends Controller
 {
-   
-    
+
+
     public function getactivites() {
         $activites = Activite::all();
-        
+
         return response()->json($activites);
 
     }
@@ -39,11 +39,11 @@ class ActiviteController extends Controller
             'created_by' => $request->created_by ,
         ]);
 
-       
+
 
         return response()->json(['status'=>'success','data'=> $activite ]);
     }
-    
+
     public function deleteactivite($id)
     {
         $post = Activite::find($id);
@@ -62,9 +62,9 @@ class ActiviteController extends Controller
             ], 403);
         }*/
 
-     
+
         $post->delete();
-       
+
 
 
         return response([
@@ -72,8 +72,9 @@ class ActiviteController extends Controller
         ], 200);
     }
 
+
     public function updateactivites($id){
-        
+
         $post = Activite::find($id);
 
         if(!$post)
@@ -82,11 +83,11 @@ class ActiviteController extends Controller
                 'message' => 'activite not found.'
             ], 403);
         }
-       
+
         $post->name = $request->input('name');
         $post->description =  $request->input('description');
         $post->color =  $request->input('color');
-      
+
         return response([
             'message' => 'Population updated.',
             'planning' => $post
