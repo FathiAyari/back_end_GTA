@@ -7,22 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Population extends Model
 {
-    protected $table = 'ref01_custom_c_population';
 
-
-    protected $fillable = [
-        'id',
-        'name',
-        'created_at',
-        'created_by',
-        
-
-
-    ];
-
-    public function users()
+protected $guarded=[];
+    public function user()
     {
-        return $this->hasMany(User::class, 'fk_population')->withDefault('id');
+        return $this->hasMany(User::class, 'population_id')->withDefault('id');
     }
     public function groupe()
     {

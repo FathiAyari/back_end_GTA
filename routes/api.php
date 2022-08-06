@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,7 @@ Route::delete('/deleteuser/{id}', [Controller::class, 'deleteusers']);
 Route::post('/createuser', [Controller::class, 'createuser']);
 Route::put('/updateuser/{id}', [Controller::class, 'updateuser']);
 
+
 //population tous bien fonctionne
 Route::post('/createpopulation', [PopulationController::class, 'createpopulation']);
 Route::delete('/deletepopulation/{id}', [PopulationController::class, 'deletepopulation']);
@@ -62,4 +64,9 @@ Route::get('/getsociete', [ActiviteController::class, 'getsociete']);
 Route::post('/postsociete', [ActiviteController::class, 'postsociete']);
 Route::put('/updatesociete/{id}', [ActiviteController::class, 'updatesociete']);
 Route::delete('/deletesociete/{id}', [ActiviteController::class, 'deletesociete']);
+
+
+
+Route::get('/stuff_stat', [StatsController::class, 'stuffStats']);
+Route::get('/products_stat', [StatsController::class, 'productsStats']);
 

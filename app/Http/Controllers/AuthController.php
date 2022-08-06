@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Population;
+use App\Models\Roles;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -14,31 +16,29 @@ class AuthController extends Controller
     //
     public function register(Request $req)
     {
-        //valdiate
-        $rules = [
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'job' => 'required|string',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string|min:6'
-        ];
-        $validator = Validator::make($req->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
         //create new user in users table
-        $role = 2 ;
+        $role_id = 1 ;
+        $population_id = 1 ;
         $user = User::create([
             'firstname' => $req->firstname,
             'lastname' => $req->lastname,
-            'job' => $req->job,
             'email' => $req->email,
             'password' => Hash::make($req->password),
-            'role_id' => $role ,
-            "status" => "test" ,
+            'role_id' => $role_id ,
+            'status' => true ,
+            'population_id' => $population_id ,
+
         ]);
         $token = $user->createToken('Personal Access Token')->plainTextToken;
-        $response = ['user' => $user, 'token' => $token];
+        $data=[
+            'id'=>$user->id,
+            'firstname'=>$user->firstname,'lastname'=>$user->lastname,
+            'email'=> $user->email,'status'=>$user->status,
+            'role'=>Roles::where("id",$user->role_id)->get()->first()->name,
+            'population'=>Population::where("id",$user->population_id)->get()->first()->name ,
+            'created_at'=>$user->created_at,
+            'updated_at'=>$user->updated_at,];
+        $response = ['user' => $data, 'token' => $token];
         return response()->json($response, 200);
     }
 
@@ -55,9 +55,17 @@ class AuthController extends Controller
         // if user email found and password is correct
         if ($user && Hash::check($req->password, $user->password)) {
             $token = $user->createToken('Personal Access Token')->plainTextToken;
-            $response = ['user' => $user, 'token' => $token];
+
+            $data=['id'=>$user->id,'firstname'=>$user->firstname,'lastname'=>$user->lastname,
+                'email'=> $user->email,'status'=>$user->status,
+                'population'=>Roles::where("id",$user->role_id)->get()->first()->name ,
+                'role'=>Roles::where("id",$user->role_id)->get()->first()->name ];
+            $response = ['user' => $data, 'token' => $token];
             return response()->json($response, 200);
+
         }
+
+
         $response = ['message' => 'Incorrect email or password'];
         return response()->json($response, 400);
     }

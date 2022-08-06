@@ -17,16 +17,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'password',
-        'job',
-        'status',
-        'fk_population',
-        'created_by'
-    ];
+    protected $guarded=[];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,8 +49,12 @@ class User extends Authenticatable
     }
 
 
-    public function population() 
+    public function population()
     {
-    	return $this->belongsTo(Population::class,'fk_population')->withDefault();
+        return $this->belongsTo(Population::class,'population_id')->withDefault();
+    }
+    public function role()
+    {
+        return $this->hasOne(Roles::class);
     }
 }

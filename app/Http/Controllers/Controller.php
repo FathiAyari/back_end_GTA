@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Roles;
 use App\Models\User;
 use App\Models\Population;
 use Illuminate\Http\Request;
@@ -17,12 +18,23 @@ class Controller extends BaseController
 
     public function getusers() {
         $users = User::all();
-        return response()->json($users);
+        $data=[];
+        foreach ($users as $user){
+            $data[]=   [
+                'id'=>$user->id,
+                'firstname'=>$user->firstname,'lastname'=>$user->lastname,
+                'email'=> $user->email,'status'=>$user->status,
+                'role'=>Roles::where("id",$user->role_id)->get()->first()->name,
+                'population'=>Population::where("id",$user->population_id)->get()->first()->name ,
+                'created_at'=>$user->created_at,
+                'updated_at'=>$user->updated_at,];
+        }
+        return response()->json($data);
 
     }
 
     public function deleteusers($id) {
- 
+
         $post = User::find($id);
 
         if(!$post)
@@ -39,58 +51,52 @@ class Controller extends BaseController
             ], 403);
         }*/
 
-     
+
         $post->delete();
-       
+
 
 
         return response([
             'message' => 'user deleted.'
         ], 200);
     }
-    
+
     public function createuser(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'job' => 'required',
-            'status' => 'required',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string|min:6',
 
-        ]);
-   
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-        $name = $request->population ;
-        if ($name == null ){
-            $post = Population::where('name' , '=', 'gta')->first();
-        }else {
-            
-            $post = Population::where('name' , '=', $name)->first();
-        }
+
+
+
         $user = User::create([
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
-            'job' => $request->job,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'status' => $request->status ,
-            'fk_population' => $post->id,
-            'created_by' => $request->created_by,
+            'status' => true ,
+            'role_id' => $request->role_id ,
+            'population_id' => $request->population_id,
+           // 'created_by' => $request->created_by,
         ]);
         $token = $user->createToken('Personal Access Token')->plainTextToken;
-        $response = ['user' => $user, 'token' => $token];
-        return response()->json(['status'=>'success','data'=> $post , $user]);
+
+       $data=[
+           'id'=>$user->id,
+           'firstname'=>$user->firstname,'lastname'=>$user->lastname,
+           'email'=> $user->email,'status'=>$user->status,
+           'role'=>Roles::where("id",$user->role_id)->get()->first()->name ,
+           'population'=>Population::where("id",$user->population_id)->get()->first()->name,
+           'created_at'=>$user->created_at,
+           'updated_at'=>$user->updated_at,
+           ];
+        $response = ['user' => $data, 'token' => $token];
+        return response()->json($response, 200);
     }
-    
+
 
     public function updateuser(Request $request ,$id)
-    {  
-        
-        
+    {
+
+
         $post = User::find($id);
 
         if(!$post)
@@ -99,7 +105,7 @@ class Controller extends BaseController
                 'message' => 'user not found.'
             ], 403);
         }
-        
+
 
       /*  if($post->fk_account != auth()->user()->id)
         {
@@ -109,7 +115,7 @@ class Controller extends BaseController
         }*/
 
         // return response([
-            
+
         //     'user' => $request
         // ]);
         $pass = Hash::make($request->passwprd) ;
@@ -121,7 +127,7 @@ class Controller extends BaseController
         if ($name == null ){
             $popuu = Population::where('name' , '=', 'gta')->first();
         }else {
-            
+
             $popuu = Population::where('name' , '=', $name)->first();
         }
 
@@ -133,10 +139,10 @@ class Controller extends BaseController
             $post->password = $pass;
             $post->status = $request->input('status');
             $post->created_by = $request->input('created_by');
-            
+
             $post->save();
-         
-      
+
+
         // for now skip for post image
 
         return response([
@@ -145,5 +151,8 @@ class Controller extends BaseController
         ], 200);
     }
 
-	
+
+
+
+
 }
