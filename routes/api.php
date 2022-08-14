@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\StockHistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,7 +69,24 @@ Route::put('/updatesociete/{id}', [ActiviteController::class, 'updatesociete']);
 Route::delete('/deletesociete/{id}', [ActiviteController::class, 'deletesociete']);
 
 
-
+// stats tous bien fonctionne
 Route::get('/stuff_stat', [StatsController::class, 'stuffStats']);
 Route::get('/products_stat', [StatsController::class, 'productsStats']);
+Route::get('/orders_stats', [StatsController::class, 'ordersStats']);
+Route::get('/planning_stats', [StatsController::class, 'planningStats']);
+
+// products
+Route::get('/products', [ProductsController::class, 'getProducts']);
+Route::post('/create_product', [ProductsController::class, 'addProduct']);
+Route::post('/supply', [ProductsController::class, 'supplyProduct']);
+Route::post('/order', [ProductsController::class, 'order']);
+
+// companies
+Route::get('/companies', [CompanyController::class, 'getCompanies']);
+Route::post('/create_company', [CompanyController::class, 'addCompany']);
+Route::delete('/delete_company/{id}', [CompanyController::class, 'deleteCompany']);
+
+
+//stock history
+Route::get('/stock_history', [StockHistoryController::class, 'getStockHistory']);
 

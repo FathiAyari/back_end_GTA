@@ -17,6 +17,12 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             PopulationSeeder::class,
             ProductsSeeder::class,
+            CompanySeeder::class,
+            OrderSeeder::class,
+            ActivitiesSeeder::class,
+            PlanningSeeder::class,
+
+
 
         ]);
     }

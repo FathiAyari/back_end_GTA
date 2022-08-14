@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ProductsSeeder extends Seeder
@@ -17,8 +18,19 @@ class ProductsSeeder extends Seeder
             'name' => "Creme de soin",
             'description' => "Creme de soin 200ml",
             'quantity' => "100",
-            'avalaible_space' => "200",
+            'available_space' => "200",
+            "price"=>120,
+            'created_at' => Carbon::now(),
             'id' => 1,
+        ]);
+        \DB::table('products')->insert([
+            'name' => "Savon liquide",
+            "price"=>30,
+            'description' => "savon liquide 200ml",
+            'quantity' => 120,
+            'available_space' => 150,
+            'created_at' => Carbon::now(),
+            'id' => 2,
         ]);
     }
 }
