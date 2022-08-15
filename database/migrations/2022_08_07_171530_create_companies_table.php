@@ -18,7 +18,8 @@ class CreateCompaniesTable extends Migration
             $table->string("name");
             $table->string("adresse");
             $table->string("url");
-            $table->string('title');
+            $table->string('tax_id');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }

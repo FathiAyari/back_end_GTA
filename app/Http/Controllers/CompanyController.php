@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\History;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,17 +22,20 @@ class CompanyController extends Controller
         $company = new Company();
         $company->name = $request->name;
         $company->adresse = $request->adresse;
+        $company->phone_number = $request->phone_number;
+        $company->tax_id = $request->tax_id;
         $destination="public/images/companies";
         $image=$request->file('image');
-        $imageName=$image->getClientOriginalName();
 
+        $imageName=$image->getClientOriginalName();
+        $image->storeAs($destination,$imageName);
         $company->url = $imageName;
-        $company->title = $request->title;
+
         $company->save();
         StockHistory::create([
 
             'type'=>"create",
-            'body'=>"$request->name has been created at ".Carbon::now()->toDateTimeString()."\nLocation :  $request->adresse",
+            'body'=>"The company $request->name has been created at ".Carbon::now()->toDateTimeString()."\nLocation :  $request->adresse",
         ]);
         return response()->json($company, 200);
     }
@@ -42,10 +46,10 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         $company->delete();
-        StockHistory::create([
+        History::create([
 
             'type'=>"delete",
-            'body'=>"$company->name has been deleted at ".Carbon::now()->toDateTimeString(),
+            'body'=>"The company $company->name has been deleted at ".Carbon::now()->toDateTimeString(),
         ]);
         return response()->json($company, 200);
     }

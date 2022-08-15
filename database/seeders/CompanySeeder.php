@@ -17,7 +17,8 @@ class CompanySeeder extends Seeder
             'name' => "cura shape",
             "adresse" => "Tunis",
             "url" => "https://www.cura-shape.com/",
-            'title' => "Cura Shape",
+            'tax_id' => "1235454",
+            'phone_number' => "53280515",
             'id' => 1,
         ]);
     }
