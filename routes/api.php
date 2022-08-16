@@ -43,6 +43,7 @@ Route::put('/updatestatus/{id}', [PlanningController::class,'updatestatus']);
 
 //activites tous bien fonctionne
 Route::get('/getactivites', [ActiviteController::class, 'getactivites']);
+Route::get('/unassignet_activities/{status}', [ActiviteController::class, 'getUnassignedActivites']);
 Route::post('/postactivites', [ActiviteController::class, 'postactivites']);
 Route::put('/updateactivites/{id}', [ActiviteController::class, 'updateactivites']);
 Route::delete('/deleteactivite/{id}', [ActiviteController::class, 'deleteactivite']);
@@ -52,7 +53,7 @@ Route::delete('/deleteactivite/{id}', [ActiviteController::class, 'deleteactivit
 Route::get('/getusers', [Controller::class, 'getusers']);
 Route::delete('/deleteuser/{id}', [Controller::class, 'deleteusers']);
 Route::post('/createuser', [Controller::class, 'createuser']);
-Route::put('/updateuser/{id}', [Controller::class, 'updateuser']);
+Route::post('/updateuser/{id}', [Controller::class, 'updateuser']);
 
 
 //population tous bien fonctionne

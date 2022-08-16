@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration
             $table->string("name");
             $table->string("description");
             $table->string("type");
-            $table->string("color");
+            $table->String("color");
             $table->timestamps();
         });
     }

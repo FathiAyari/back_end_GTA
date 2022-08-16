@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ActivitiesSeeder extends Seeder
@@ -17,8 +18,7 @@ class ActivitiesSeeder extends Seeder
             'name' => "test name",
             "description"=>"cura shape",
             "type"=>"Emergency",
-            "color"=>"0xffed6591",
-
+            "color"=>0xffed6591,
             'id' => 1,
         ]);
     }

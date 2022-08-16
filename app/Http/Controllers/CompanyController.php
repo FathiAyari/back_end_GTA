@@ -32,7 +32,7 @@ class CompanyController extends Controller
         $company->url = $imageName;
 
         $company->save();
-        StockHistory::create([
+        History::create([
 
             'type'=>"create",
             'body'=>"The company $request->name has been created at ".Carbon::now()->toDateTimeString()."\nLocation :  $request->adresse",
