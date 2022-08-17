@@ -16,17 +16,26 @@ class ActiviteController extends Controller
 
     public function getUnassignedActivites($status)
     {
-        $plannings = Planning::where('status', $status)->get();
-        $data = [];
-        foreach ($plannings as $planning) {
-            $data[] = [
-                "name" => Activity::where("id", $planning->activity_id)->get()->first()->name,
-                "id" => Activity::where("id", $planning->activity_id)->get()->first()->id,
-                "description" => Activity::where("id", $planning->activity_id)->get()->first()->description,
-                "type" => Activity::where("id", $planning->activity_id)->get()->first()->type,
-                "color" => Activity::where("id", $planning->activity_id)->get()->first()->color,
 
-            ];
+
+
+        if ($status != -1) {
+            $data = DB::table('activities')
+                ->join('plannings', 'activities.id', '=', 'plannings.user_id')
+                ->where('plannings.status', $status)
+                ->select('activities.*')
+                ->get();
+
+        } else {
+            if (count(Planning::all()) == 0) {
+                $data = Activity::all();
+            } else {
+                $data = DB::table('activities')
+                    ->join('plannings', 'activities.id', '!=', 'plannings.user_id')
+                    ->select('activities.*')
+                    ->get();
+
+            }
         }
         return response()->json($data, 200);
     }

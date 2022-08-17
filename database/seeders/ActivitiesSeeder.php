@@ -18,8 +18,15 @@ class ActivitiesSeeder extends Seeder
             'name' => "test name",
             "description"=>"cura shape",
             "type"=>"Emergency",
-            "color"=>0xffed6591,
+            "color"=>"0xffed6591",
             'id' => 1,
+        ]);
+        \DB::table('activities')->insert([
+            'name' => "test 2",
+            "description"=>"cura shape",
+            "type"=>"low",
+            "color"=>"0xffed6591",
+            'id' => 2,
         ]);
     }
 }
