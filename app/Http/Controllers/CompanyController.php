@@ -53,4 +53,27 @@ class CompanyController extends Controller
         ]);
         return response()->json($company, 200);
     }
+
+
+
+    public  function  updateCompany(Request  $request,$id){
+      $company=Company::find($id);
+      $company->name=$request->name;
+      $company->phone_number=$request->phone_number;
+      $company->tax_id=$request->tax_id;
+      $company->adresse=$request->adresse;
+        if ($request->hasFile('image')) {
+
+            $destination="public/images/companies";
+            $image=$request->file('image');
+
+            $imageName=$image->getClientOriginalName();
+            $image->storeAs($destination,$imageName);
+            $company->url = $imageName;
+        }
+
+      $company->save();
+
+      return response()->json($company,200);
+    }
 }

@@ -18,7 +18,6 @@ class ActiviteController extends Controller
     {
 
 
-
         if ($status != -1) {
             $data = DB::table('activities')
                 ->join('plannings', 'activities.id', '=', 'plannings.user_id')
@@ -51,45 +50,21 @@ class ActiviteController extends Controller
     public function postactivites(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'created_by' => 'required',
 
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-
-        $activite = Activite::create([
+        $activite = Activity::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $request->type,
-            'code' => $request->code,
             'color' => $request->color,
-            'created_by' => $request->created_by,
         ]);
 
 
-        return response()->json(['status' => 'success', 'data' => $activite]);
+        return response()->json($activite, 200);
     }
 
-    public function deleteactivite($id)
+    public function deleteActivity($id)
     {
-        $post = Activite::find($id);
-
-        if (!$post) {
-            return response([
-                'message' => 'activity not found.'
-            ], 403);
-        }
-
-        /* if($post->fk_account != auth()->user()->id)
-         {
-             return response([
-                 'message' => 'Permission denied.'
-             ], 403);
-         }*/
+        $post = Activity::find($id);
 
 
         $post->delete();
@@ -101,24 +76,20 @@ class ActiviteController extends Controller
     }
 
 
-    public function updateactivites($id)
+    public function updateActivity(Request $request, $id)
     {
 
-        $post = Activite::find($id);
+        $post = Activity::find($id);
 
-        if (!$post) {
-            return response([
-                'message' => 'activite not found.'
-            ], 403);
-        }
 
-        $post->name = $request->input('name');
-        $post->description = $request->input('description');
-        $post->color = $request->input('color');
-
+        $post->name = $request->name;
+        $post->description = $request->description;
+        $post->color = $request->color;
+        $post->type = $request->type;
+        $post->save();
         return response([
-            'message' => 'Population updated.',
-            'planning' => $post
+
+            'activity' => $post
         ], 200);
     }
 

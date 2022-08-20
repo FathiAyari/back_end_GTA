@@ -16,7 +16,8 @@ class CreatePlanningsTable extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id");
-            $table->foreignId("activity_id");
+            $table->foreignId("activity_id")->constrained()
+                ->onDelete('cascade');
             $table->dateTime("start_time");
             $table->dateTime("end_time");
             $table->dateTime("real_end_time");

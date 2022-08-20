@@ -45,8 +45,8 @@ Route::put('/updatestatus/{id}', [PlanningController::class,'updatestatus']);
 Route::get('/getactivites', [ActiviteController::class, 'getactivites']);
 Route::get('/activities/{status}', [ActiviteController::class, 'getUnassignedActivites']);
 Route::post('/postactivites', [ActiviteController::class, 'postactivites']);
-Route::put('/updateactivites/{id}', [ActiviteController::class, 'updateactivites']);
-Route::delete('/deleteactivite/{id}', [ActiviteController::class, 'deleteactivite']);
+Route::post('/updateactivity/{id}', [ActiviteController::class, 'updateActivity']);
+Route::delete('/deleteactivity/{id}', [ActiviteController::class, 'deleteActivity']);
 
 
 //users tous bien fonctionne
@@ -82,11 +82,13 @@ Route::get('/products', [ProductsController::class, 'getProducts']);
 Route::post('/create_product', [ProductsController::class, 'addProduct']);
 Route::post('/supply', [ProductsController::class, 'supplyProduct']);
 Route::post('/order', [ProductsController::class, 'order']);
+Route::get('/product/{id}', [ProductsController::class, 'getProduct']);
 
 // companies
 Route::get('/companies', [CompanyController::class, 'getCompanies']);
 Route::post('/create_company', [CompanyController::class, 'addCompany']);
 Route::delete('/delete_company/{id}', [CompanyController::class, 'deleteCompany']);
+Route::post('/update_company/{id}', [CompanyController::class, 'updateCompany']);
 
 
 //stock history
