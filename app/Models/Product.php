@@ -13,5 +13,9 @@ protected $guarded=[];
     {
         return $this->hasMany(Orders::class,'product_id')->withDefault();
     }
+    public function preorders()
+    {
+        return $this->hasMany(PreOrder::class,'product_id')->withDefault();
+    }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PreOrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StockHistoryController;
@@ -64,7 +65,7 @@ Route::post('/createplagehoraire/{id}', [PopulationController::class, 'createpla
 Route::get('/getpopulations', [PopulationController::class, 'getpopulations']);
 
 
-//societes tous bien fonctionne
+//company tous bien fonctionne
 Route::get('/getsociete', [ActiviteController::class, 'getsociete']);
 Route::post('/postsociete', [ActiviteController::class, 'postsociete']);
 Route::put('/updatesociete/{id}', [ActiviteController::class, 'updatesociete']);
@@ -81,7 +82,7 @@ Route::get('/planning_stats', [StatsController::class, 'planningStats']);
 Route::get('/products', [ProductsController::class, 'getProducts']);
 Route::post('/create_product', [ProductsController::class, 'addProduct']);
 Route::post('/supply', [ProductsController::class, 'supplyProduct']);
-Route::post('/order', [ProductsController::class, 'order']);
+Route::get('/order/{id}', [ProductsController::class, 'order']);
 Route::get('/product/{id}', [ProductsController::class, 'getProduct']);
 
 // companies
@@ -97,3 +98,10 @@ Route::get('/stock_history', [StockHistoryController::class, 'getStockHistory'])
 
 // general history
 Route::get('/general_history', [\App\Http\Controllers\HistoryController::class, 'getGeneralHistory']);
+
+
+//orders
+Route::get('/preorders/{id}', [PreOrderController::class, 'getPrOrders']);
+Route::post('/add_order', [PreOrderController::class, 'addPreOrder']);
+Route::post('/update_order/{id}', [PreOrderController::class, 'updatePreOrder']);
+Route::delete('/delete_order/{id}', [PreOrderController::class, 'deletePreOrder']);
