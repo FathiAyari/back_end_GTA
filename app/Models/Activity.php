@@ -12,7 +12,7 @@ class Activity extends Model
 
     public function plannings()
     {
-        return $this->hasMany(Planning::class, 'planning_id')->withDefault('id');
+        return $this->hasMany(Planning::class, 'planning_id');
     }
 
     /*    public function users()

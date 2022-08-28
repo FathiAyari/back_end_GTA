@@ -15,12 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("product_id")->constrained()
-                ->onDelete('cascade');
-            $table->foreignId("company_id")->constrained()
-                ->onDelete('cascade');
-            $table->integer("quantity");
-            $table->date("created_at");
+
+            $table->string("created");
 
         });
     }

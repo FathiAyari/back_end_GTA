@@ -15,7 +15,7 @@ class ActivitiesSeeder extends Seeder
     public function run()
     {
         \DB::table('activities')->insert([
-            'name' => "test name",
+            'name' => "13",
             "description"=>"cura shape",
             "type"=>"Emergency",
             "color"=>4294901760,

@@ -20,7 +20,7 @@ class ActiviteController extends Controller
 
         if ($status != -1) {
             $data = DB::table('activities')
-                ->join('plannings', 'activities.id', '=', 'plannings.user_id')
+                ->join('plannings', 'activities.id', '=', 'plannings.activity_id')
                 ->where('plannings.status', $status)
                 ->select('activities.*')
                 ->get();
@@ -29,10 +29,8 @@ class ActiviteController extends Controller
             if (count(Planning::all()) == 0) {
                 $data = Activity::all();
             } else {
-                $data = DB::table('activities')
-                    ->join('plannings', 'activities.id', '!=', 'plannings.user_id')
-                    ->select('activities.*')
-                    ->get();
+                $data = \DB::select('SELECT * from activities where activities.id  NOT IN (SELECT plannings.activity_id from plannings )');
+
 
             }
         }

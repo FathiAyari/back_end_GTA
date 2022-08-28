@@ -15,12 +15,8 @@ class ProductsController extends Controller
     public function getProducts()
     {
         $products = Product::orderBy('created_at', 'desc')->get();
-        $data = [];
-        foreach ($products as $product) {
-            $product->total_orders = count(Orders::where("product_id", $product->id)->get());
-            $data[] = $product;
-        }
-        return response()->json($data, 200);
+
+        return response()->json($products, 200);
     }
 
     public function getProduct($id)
@@ -65,7 +61,7 @@ class ProductsController extends Controller
     }
 
 
-    public function order($id)
+    public function order($id,$cmp)
     {
         $preOrders = PreOrder::where("user_id", $id)->get();
         foreach ($preOrders as $preOrder){
@@ -73,26 +69,22 @@ class ProductsController extends Controller
              $product=Product::find($preOrder->product_id);
              $quantity=$product->quantity-$preOrder->quantity;
              $product->quantity=$quantity;
+             StockHistory::create([
+                 'type' => "order",
+                 'body' => "$product->name has been ordered at " . Carbon::now()->toDateTimeString() .
+                     " with $preOrder->quantity  item  to " . $cmp
+             ]);
              $product->save();
              $preOrder->delete();
          }
 
         }
-        /*$product = Product::find($request->product_id);
-        $product->quantity = $product->quantity - $request->quantity;
-        $product->save();*/
 
-        /*$order = Orders::create([
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'company_id' => $request->company_id,
-            'created_at' => Carbon::now()->format('Y-m-d')
-        ]);*/
-        /*StockHistory::create([
-            'type' => "order",
-            'body' => "$product->name has been ordered at " . Carbon::now()->toDateTimeString() .
-                " with $request->quantity to " . Company::where("id", $request->company_id)->first()->name
-        ]);*/
+
+        $order = Orders::create([
+            'created' => Carbon::parse(Carbon::now())->format('Y-m')
+        ]);
+
         return response()->json(2, 200);
     }
 

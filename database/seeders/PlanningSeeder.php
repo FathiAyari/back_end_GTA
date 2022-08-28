@@ -21,6 +21,7 @@ class PlanningSeeder extends Seeder
             "real_end_time"=>"2020-08-05 12:00:00",
             "real_start_time"=>"2020-08-05 08:00:00",
             "status"=>0,
+            "note"=>"test",
             'id' => 1,
         ]);
     }

@@ -19,9 +19,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getusers()
+    public function getusers($id)
     {
-        $users = User::orderBy('created_at', 'desc')->get();
+        $users = User::where('id',"!=",$id)->orderBy('created_at', 'desc')->get();
         $data = [];
         foreach ($users as $user) {
             $data[] = [

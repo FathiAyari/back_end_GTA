@@ -47,8 +47,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\PlanningVersion','created_by')->withDefault();
     }
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class,'user_id')->withDefault();
+    }
 
-
+    public function holidays()
+    {
+        return $this->hasMany(Holiday::class,'user_id')->withDefault();
+    }
     public function population()
     {
         return $this->belongsTo(Population::class,'population_id')->withDefault();
@@ -57,4 +64,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Roles::class);
     }
+
 }

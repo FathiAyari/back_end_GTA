@@ -13,6 +13,10 @@ protected $guarded=[];
     {
         return $this->hasMany(User::class, 'population_id')->withDefault('id');
     }
+    public function populationConfig()
+    {
+        return $this->hasMany(PopulationConfig::class, 'population_id')->withDefault('id');
+    }
     public function groupe()
     {
         return $this->belongsToMany(ConfigGroup::class);

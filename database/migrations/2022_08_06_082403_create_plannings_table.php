@@ -19,11 +19,13 @@ class CreatePlanningsTable extends Migration
             $table->foreignId("activity_id")->constrained()
                 ->onDelete('cascade');
             $table->dateTime("start_time");
+            $table->string("note");
             $table->dateTime("end_time");
-            $table->dateTime("real_end_time");
-            $table->dateTime("real_start_time");
+            $table->dateTime("real_end_time")->nullable();
+            $table->dateTime("real_start_time")->nullable();
             $table->integer("status")->default(0);
-            $table->timestamps();
+            $table->string("created");
+
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class PopulationSeeder extends Seeder
@@ -14,8 +15,9 @@ class PopulationSeeder extends Seeder
     public function run()
     {
         \DB::table('populations')->insert([
-            'name' => "GTA",
+            'name' => "Super admins",
             'id' => 1,
+            'created_at'=>Carbon::now()
         ]);
 
     }
