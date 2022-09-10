@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Notification;
 use App\Models\Orders;
 use App\Models\PreOrder;
 use App\Models\Product;
@@ -75,6 +76,13 @@ class ProductsController extends Controller
                      " with $preOrder->quantity  item  to " . $cmp
              ]);
              $product->save();
+             if($product->quantity<20){
+                 Notification::create([
+                     "status" => 0,
+                     "type" => "lack",
+                     "body" =>"The product ".$product->name." quantity is less than 20 units please try to supply it ASAP"
+                 ]);
+             }
              $preOrder->delete();
          }
 
