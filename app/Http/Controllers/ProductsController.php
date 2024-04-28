@@ -67,10 +67,14 @@ class ProductsController extends Controller
         $preOrders = PreOrder::where("user_id", $id)->get();
         foreach ($preOrders as $preOrder){
          if($preOrder->quantity<=$preOrder->product->quantity){
+
+
              $product=Product::find($preOrder->product_id);
              $quantity=$product->quantity-$preOrder->quantity;
              $product->quantity=$quantity;
              StockHistory::create([
+
+
                  'type' => "order",
                  'body' => "$product->name has been ordered at " . Carbon::now()->toDateTimeString() .
                      " with $preOrder->quantity  item  to " . $cmp
